@@ -63,11 +63,11 @@ The terminal interface is designed to keep the most useful information visible w
 │                                                          │
 ├──────────────────────────────────────────────────────────┤
 │  PROXIES TESTED       WORKING       FAILED       SPEED   │
-│       ---               ---          ---          ---   │
+│       ---               ---          ---          ---    │
 ├──────────────────────────────────────────────────────────┤
 │  LATEST WORKING PROXIES                                  │
 │  ┌────────────────────────────────────────────────────┐  │
-│  │  Validated results appear here during the scan      │  │
+│  │  Validated results appear here during the scan     │  │
 │  └────────────────────────────────────────────────────┘  │
 │                                                          │
 ├──────────────────────────────────────────────────────────┤
