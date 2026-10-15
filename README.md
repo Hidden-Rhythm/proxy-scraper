@@ -1,217 +1,254 @@
  <div align="center">
 
-# 🌐 Proxy Scraper
+# 🌐 PROXY SCRAPER
 
-### *Find proxies. Test what works. See the results live. ⚡*
+### *Collect. Validate. Measure. Export. ⚡*
 
-A Python-based proxy scraping and validation tool with a live terminal dashboard, real-time progress tracking, response-time statistics, and a clean view of working results.
+A feature-rich Python proxy scraping and validation tool with a live terminal dashboard, concurrent testing, latency statistics, SQLite storage, and Discord webhook support.
 
-<br>
+[![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Interface](https://img.shields.io/badge/Interface-Rich%20TUI-7C3AED?style=for-the-badge)](https://github.com/Textualize/rich)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-555555?style=for-the-badge)](https://github.com/Hidden-Rhythm/proxy-scraper)
 
-<a href="https://github.com/Hidden-Rhythm/proxy-scraper">
-  <img src="https://img.shields.io/badge/💻%20Source-GitHub-black?style=for-the-badge&logo=github" alt="GitHub Source">
-</a>
-<a href="https://www.python.org/">
-  <img src="https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python">
-</a>
-<img src="https://img.shields.io/badge/Interface-Terminal%20UI-7C3AED?style=for-the-badge" alt="Terminal UI">
-<img src="https://img.shields.io/badge/Status-Open%20Source-2EA44F?style=for-the-badge" alt="Open Source">
-
-<br><br>
-
-**Built for the terminal. Designed for visibility. Made to be practical.**
+**[Explore the Repository](https://github.com/Hidden-Rhythm/proxy-scraper) · [Report a Bug](https://github.com/Hidden-Rhythm/proxy-scraper/issues)**
 
 </div>
 
 ---
 
-## 📖 What Is Proxy Scraper?
+## 📖 About
 
-Proxy Scraper is a Python tool designed to collect and test proxy endpoints while keeping the entire process visible in your terminal.
+**Proxy Scraper** is a menu-driven Python application that collects public proxy endpoints from multiple online sources, tests candidates against a configurable website, measures response latency, and organizes successful results.
 
-Instead of staring at a blank console filled with random output, you get a live dashboard that helps you follow the scan, monitor progress, check validation statistics, and see the latest working results.
+The application uses the [Rich](https://github.com/Textualize/rich) library to create a colorful terminal interface with a live main menu, progress indicators, validation statistics, and a continuously updated dashboard.
 
-Whether you're experimenting with proxy lists, learning about networking, or building your own testing workflow, Proxy Scraper gives you a more organized way to handle the process.
+It also supports exporting results to multiple formats, storing validation records in SQLite, and sending results to a Discord channel through a webhook.
 
 ## ✨ Features
 
-| Feature | Description |
-|:---|:---|
-| 🔎 **Proxy Scraping** | Collect proxy candidates for validation. |
-| ✅ **Proxy Validation** | Test candidates to identify proxies that respond successfully to the configured checks. |
-| 📊 **Live Dashboard** | Follow the scan through a continuously updated terminal interface. |
-| 📈 **Progress Tracking** | Monitor scan progress and validation counts as the process runs. |
-| ⚡ **Speed Statistics** | View response-time information and performance indicators. |
-| 🟢 **Working Proxy Display** | Keep the latest successful results visible in the dashboard. |
-| 🧵 **Thread Monitoring** | Track the configured worker or thread count. |
-| ⏱️ **Elapsed-Time Tracking** | See how long the current operation has been running. |
-| 🎨 **Formatted Terminal UI** | A structured, colorful interface instead of a wall of plain text. |
-| 🛠️ **Configurable Settings** | Adjust supported scraper and validation settings to suit your workflow. |
+| Feature | Details |
+|---|---|
+| 🌍 Multiple Sources | Collects proxy candidates from GitHub-hosted lists, proxy APIs, and public proxy-list websites. |
+| 🔎 Proxy Scraping | Extracts IPv4 address and port combinations from retrieved source content. |
+| ⚡ Concurrent Validation | Tests multiple candidates using `ThreadPoolExecutor`. |
+| 📊 Live Dashboard | Displays progress, working and failed counts, success rate, elapsed time, and recent successful results. |
+| ⏱️ Latency Measurement | Measures response time and ranks successful results from fastest to slowest. |
+| 🎛️ Interactive Settings | Configure the proxy limit, test URL, timeout, worker count, and Discord webhook. |
+| 💾 Multiple Export Formats | Saves results as TXT, CSV, and JSON files. |
+| 🗄️ SQLite Database | Stores validated proxy addresses, ports, latency, and test timestamps. |
+| 💬 Discord Integration | Sends a results summary and a text file through a Discord webhook. |
+| 🤖 Full Auto Mode | Runs the scraping, validation, and saving workflow, with optional Discord delivery. |
+| 🔄 Source Checker | Checks configured sources for HTTP availability. |
+| 🎨 Terminal UI | Uses Rich panels, tables, progress bars, colors, and an ASCII-art title. |
 
-## 🖥️ The Dashboard
+## 🖥️ Terminal Interface
 
-The terminal interface is designed to keep the most useful information visible while the scraper works.
+The application includes a live main menu and a separate validation dashboard.
+
+### Main menu
 
 ```text
+                   PROXY SCRAPER
+               Discord · GitHub
+
 ╭──────────────────────────────────────────────────────────╮
-│                    🌐 PROXY SCRAPER                      │
-│                 Live Validation Dashboard                │
+│ ACTIVE            TIME             SCRAPED         VALID │
 ├──────────────────────────────────────────────────────────┤
+│                       MAIN MENU                          │
 │                                                          │
-│  STATUS          SCAN PROGRESS          ELAPSED          │
-│  Running         ████████░░░░░░░        00:00:00         │
-│                                                          │
-├──────────────────────────────────────────────────────────┤
-│  PROXIES TESTED       WORKING       FAILED       SPEED   │
-│       ---               ---          ---          ---    │
-├──────────────────────────────────────────────────────────┤
-│  LATEST WORKING PROXIES                                  │
-│  ┌────────────────────────────────────────────────────┐  │
-│  │  Validated results appear here during the scan     │  │
-│  └────────────────────────────────────────────────────┘  │
-│                                                          │
-├──────────────────────────────────────────────────────────┤
-│  Workers: ---                 Timeout: ---               │
+│  [1]  Scrape Proxies                                     │
+│  [2]  Validate Proxies                                   │
+│  [3]  View Results                                       │
+│  [4]  Save Proxies                                       │
+│  [5]  Send to Discord                                    │
+│  [6]  Settings                                           │
+│  [7]  Full Auto Mode                                     │
+│  [8]  Update Sources                                     │
+│  [9]  View Database                                      │
+│  [0]  Exit                                               │
 ╰──────────────────────────────────────────────────────────╯
 ```
 
-*Illustrative layout only. The values and exact appearance depend on the running application.*
+*Illustrative representation of the actual menu options; exact rendering depends on terminal size.*
 
-## ⚙️ How It Works
+### Live validation dashboard
 
-```text
-        ┌──────────────────────┐
-        │   Start the Script   │
-        └──────────┬───────────┘
-                   │
-                   ▼
-        ┌──────────────────────┐
-        │  Collect Candidates  │
-        └──────────┬───────────┘
-                   │
-                   ▼
-        ┌──────────────────────┐
-        │   Test Each Proxy    │
-        └──────────┬───────────┘
-                   │
-             ┌─────┴─────┐
-             ▼           ▼
-     ┌─────────────┐ ┌─────────────┐
-     │   Working   │ │   Failed    │
-     │   Results   │ │   Results   │
-     └──────┬──────┘ └─────────────┘
-            │
-            ▼
-     ┌─────────────────┐
-     │  Update the UI  │
-     │  and Statistics │
-     └─────────────────┘
-```
+During validation, the application displays:
 
-The dashboard provides visibility into the process, making it easier to understand how the scan is progressing and how many candidates pass the configured checks.
+- Progress percentage and number of proxies tested.
+- Number of working and failed candidates.
+- Success rate and elapsed time.
+- Average latency and a speed indicator.
+- Recently validated proxies and their response times.
+- The configured test URL, worker count, and timeout.
+
+## ⚙️ Configuration
+
+On startup, the application presents an interactive setup screen. The defaults defined in the source code are:
+
+| Setting | Default | Purpose |
+|---|---|---|
+| Maximum proxies | `1000` | Maximum number of candidates to collect or test. |
+| Worker threads | `50` | Maximum concurrent validation workers. |
+| Timeout | `8` seconds | Timeout for each proxy validation request. |
+| Test URL | `https://www.youtube.com/` | Website used to test proxy connectivity. |
+| Results directory | `proxy_results` | Directory used for exported results. |
+| Discord webhook | Empty | Optional webhook URL for sending results. |
+| Auto-send | `False` | Enables automatic Discord delivery in Full Auto Mode. |
+
+Use the numbered setup options to change the available settings, save the configuration for the current run, or reset the settings to their defaults.
+
+**Note:** The settings are held in memory by the application; the current code does not persist the configuration between launches.
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Python 3 installed on your system.
-- Git, if you want to clone the repository.
-- An internet connection for network-based scraping and validation.
-- Any dependencies listed by the project.
+- Python 3 installed.
+- An internet connection.
+- A terminal that supports interactive input and Rich formatting.
 
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/Hidden-Rhythm/proxy-scraper.git
 ```
 
-### 2. Open the Project Folder
+### 2. Enter the project directory
 
 ```bash
 cd proxy-scraper
 ```
 
-### 3. Install Dependencies
+### 3. Install the dependencies
 
-If the repository contains a `requirements.txt` file, install its dependencies with:
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-If no requirements file is included, install the dependencies required by the script instead.
-
-### 4. Run Proxy Scraper
+The script attempts to install missing third-party dependencies automatically when it starts. You can install them manually beforehand:
 
 ```bash
-python proxy_scraper.py
+python -m pip install requests colorama rich pyfiglet fake-useragent
 ```
 
-On Windows, you can also use:
+### 4. Run the application
+
+**Use the actual filename, including the hyphen:**
 
 ```bash
-py proxy_scraper.py
+python proxy-scraper.py
 ```
 
-Follow the application's prompts and configuration options, if available.
+On Windows, you can also run:
 
-## 🎮 How to Use
+```bash
+py proxy-scraper.py
+```
 
-1. **Launch the script** from your terminal.
-2. **Configure the available settings** for scraping and validation.
-3. **Start the scan** using the application's supported workflow.
-4. **Monitor the dashboard** to follow progress, counts, timing, and the latest successful results.
-5. **Review the results** and use the validated endpoints only for appropriate, authorized testing.
+Follow the interactive prompts to configure the application and select an action from the main menu.
 
-> **Tip:** A proxy that responds successfully during one test is not guaranteed to remain online or work with every website. Revalidate proxies before relying on them.
+## 🎮 Menu Guide
 
-## 🗂️ Project Structure
+| Option | Action |
+|---|---|
+| `1` | Scrape proxy candidates from the configured sources. |
+| `2` | Validate collected candidates and measure response latency. |
+| `3` | Display successful results, ordered by speed. |
+| `4` | Export validated results to TXT, CSV, and JSON. |
+| `5` | Send validated results to Discord using a webhook. |
+| `6` | Open the configuration screen. |
+| `7` | Run the full scraping, validation, and saving workflow. |
+| `8` | Check the availability of configured sources. |
+| `9` | View database statistics and the ten fastest stored entries. |
+| `0` | Exit the application. |
+
+## 📁 Output Files
+
+The application creates its results directory automatically and initializes a SQLite database.
 
 ```text
 proxy-scraper/
-│
-├── proxy_scraper.py     # Main Python application
-├── requirements.txt     # Dependencies, if included
-└── README.md            # Project documentation
+├── proxy-scraper.py
+├── README.md
+├── proxies.db
+└── proxy_results/
+    ├── proxies_fastest_<timestamp>.txt
+    ├── proxies_<timestamp>.csv
+    └── proxies_<timestamp>.json
 ```
 
-*This is a simplified overview. Additional files may exist in the repository.*
+The database and results directory are generated when the application runs; they are not part of the two-file repository listing shown above.
+
+### Export formats
+
+- **TXT:** Proxy addresses sorted by latency, with timing information.
+- **CSV:** Ranked results with IP address, port, and latency in milliseconds.
+- **JSON:** Generated metadata and the validated proxy records.
+
+Exported filenames include a timestamp so that separate saves can be kept apart.
+
+## 🗄️ Database
+
+Validation records are stored in `proxies.db` using SQLite.
+
+The `valid_proxies` table contains:
+
+| Field | Description |
+|---|---|
+| `ip` | Proxy IP address. |
+| `port` | Proxy port. |
+| `latency` | Measured response time in seconds. |
+| `tested_at` | Time recorded for the validation result. |
+
+The database view displays the number of stored records, average recorded latency, database size, and up to ten of the fastest stored entries.
+
+## 💬 Discord Webhook
+
+You can configure a Discord webhook through the settings menu or when choosing the Discord action.
+
+When results are available, the application sends a summary containing the number of working proxies and the fastest and slowest recorded response times, along with a text file of the results.
+
+Full Auto Mode can send the results automatically when Auto-send is enabled and a webhook URL is configured.
+
+**Keep your webhook URL private.** Anyone who obtains it may be able to post messages to its channel.
 
 ## 🧰 Built With
 
 | Technology | Purpose |
-|:---|:---|
-| 🐍 **Python** | Core application and scraping logic |
-| 🖥️ **Terminal UI** | Live dashboard and progress display |
-| 🌐 **Networking** | Communicating with proxy endpoints |
-| 🧵 **Concurrent Processing** | Managing multiple checks where supported |
+|---|---|
+| Python | Application logic and networking. |
+| Requests | Retrieving source lists and testing proxy connectivity. |
+| Rich | Terminal dashboard, tables, panels, progress bars, and live rendering. |
+| Colorama | Terminal color initialization. |
+| PyFiglet | ASCII-art application title. |
+| Fake UserAgent | User-Agent selection for requests. |
+| ThreadPoolExecutor | Concurrent proxy validation. |
+| SQLite | Persistent storage of validation records. |
 
-## 🔐 Safety & Responsible Use
+The application also uses Python's standard library for JSON, CSV, regular expressions, threading, timing, and file management.
 
-Public proxies are operated by third parties and may be unreliable or malicious. Use this project responsibly.
+## ⚠️ Important Notes
 
-- Only test systems and endpoints you are authorized to access.
-- Never send passwords, payment details, private messages, or other sensitive information through untrusted proxies.
-- Do not assume that a successful connection means a proxy is secure or anonymous.
-- Respect the terms of service and rate limits of websites and proxy sources.
-- Be mindful of network usage when running concurrent checks.
+- Public proxies may be unreliable, slow, misconfigured, or operated by untrusted parties.
+- A successful test only indicates that a proxy passed the application's configured response checks at that moment.
+- Validation is performed using HTTP proxy settings in Requests; collecting an endpoint from a SOCKS-labelled source does not by itself mean the application supports SOCKS protocol validation.
+- The current script uses a configurable test URL and accepts selected HTTP response codes as successful validation results.
+- Source availability can change over time, and some endpoints may stop working without notice.
+- Avoid sending credentials or sensitive information through untrusted proxies.
+- Use the tool responsibly and follow applicable laws and the terms of service of the services you access.
 
 ## 🤝 Contributing
 
-Have an idea to improve Proxy Scraper?
-
-Contributions, bug reports, and suggestions are welcome.
+Suggestions, bug reports, and improvements are welcome.
 
 1. Fork the repository.
 2. Create a branch for your changes.
-3. Make and test your improvements.
-4. Submit a pull request with a clear description.
+3. Make and test your changes.
+4. Open a pull request describing the improvement.
 
-## 📌 Project Links
+## 🔗 Links
 
-- **Repository:** [Hidden-Rhythm/proxy-scraper](https://github.com/Hidden-Rhythm/proxy-scraper)
-- **Issues & Bug Reports:** [Open an issue](https://github.com/Hidden-Rhythm/proxy-scraper/issues)
-- **Source Code:** [Browse the repository](https://github.com/Hidden-Rhythm/proxy-scraper)
+- **Repository:** https://github.com/Hidden-Rhythm/proxy-scraper
+- **Source code:** https://github.com/Hidden-Rhythm/proxy-scraper/blob/main/proxy-scraper.py
+- **Issues:** https://github.com/Hidden-Rhythm/proxy-scraper/issues
+- **Author:** https://github.com/Hidden-Rhythm
 
 ---
 
@@ -219,8 +256,6 @@ Contributions, bug reports, and suggestions are welcome.
 
 ### 💜 Built by Hidden-Rhythm
 
-*Making terminal tools more useful, one project at a time.*
-
-**If you find this project useful, consider giving it a ⭐ on GitHub.**
+*Collect smarter. Validate faster. Keep your results organized.*
 
 </div>
