@@ -124,7 +124,7 @@ class ProxyManager:
         self._clock_stop = threading.Event()
         self._start_clock_thread()
 
-    # ---------- Terminal size / window title ----------
+    # Terminal size / window title
     def _term_size(self):
         """Accurate terminal (cols, rows). Uses Windows API on Windows."""
         try:
@@ -195,7 +195,6 @@ class ProxyManager:
         self._refresh_console()
         os.system('cls' if os.name == 'nt' else 'clear')
 
-    # ---------- Live-rendered logo + credit ----------
     def _build_logo(self, term_width):
         logo = pyfiglet.figlet_format("PROXY SCRAPER", font="slant")
         lines = [line.rstrip() for line in logo.splitlines() if line.strip()]
@@ -226,7 +225,7 @@ class ProxyManager:
         console.print(self._build_credit())
         console.print()
 
-    # ---------- Non-blocking key read ----------
+    # Non-blocking key read 
     def _read_key_nonblocking(self):
         if os.name == 'nt':
             import msvcrt
@@ -251,7 +250,7 @@ class ProxyManager:
                 termios.tcsetattr(fd, termios.TCSADRAIN, old)
             return ch
 
-    # ---------- Initial setup (uses Prompt.ask, fine) ----------
+    # Initial setup
     def initial_setup(self):
         while True:
             self.clear()
@@ -407,7 +406,7 @@ class ProxyManager:
                     return ch
                 time.sleep(0.08)
 
-    # ---------- Simple non-live header for action screens ----------
+    # Simple non-live header for action screens 
     def print_header(self):
         self.clear()
         self.show_logo()
@@ -423,7 +422,7 @@ class ProxyManager:
         )
         console.print(Panel(stats, border_style="cyan", box=box.ROUNDED, padding=(0, 1), expand=True))
 
-    # ---------- Actions (unchanged behaviour) ----------
+    # Actions 
     def scrape_proxies(self):
         self.print_header()
         console.print(Align.center("[bold cyan]🔍 SCRAPING PROXIES[/bold cyan]"))
